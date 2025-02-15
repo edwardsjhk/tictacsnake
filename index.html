@@ -247,6 +247,7 @@
     <button class="mode-btn" onclick="setGameMode('best-of-5', event)">Best of 5</button>
     <button class="mode-btn" onclick="setGameMode('best-of-7', event)">Best of 7</button>
     <button class="mode-btn" onclick="setGameMode('best-of-9', event)">Best of 9</button>
+    <button class="mode-btn" onclick="setGameMode('first-to-20', event)">First to 20</button>
   </div>
 
   <div class="game-status">Player X's Turn</div>
@@ -353,6 +354,7 @@
         case 'best-of-5': targetScore = 3; break;
         case 'best-of-7': targetScore = 4; break;
         case 'best-of-9': targetScore = 5; break;
+        case 'first-to-20': targetScore = 20; break;
         default: targetScore = Infinity;
       }
       
