@@ -281,7 +281,7 @@
     </div>
   </div>
 
-  <button class="reset-btn" onclick="resetGame()">Reset Game</button>
+  <button class="reset-btn" onclick="fullResetGame()">Reset Game</button>
 
   <script>
     let currentPlayer = 'X';
@@ -440,6 +440,12 @@
       gameBoard = ['', '', '', '', '', '', '', '', ''];
       gameActive = true;
       clearInterval(timer);
+    function fullResetGame() {
+      currentPlayer = 'X';
+      gameBoard = ['', '', '', '', '', '', '', '', ''];
+      gameActive = true;
+      clearInterval(timer);
+      scores = { X: 0, O: 0 };
       
       document.querySelectorAll('.cell').forEach(cell => {
         cell.textContent = '';
@@ -535,6 +541,10 @@
         case 'ArrowDown': if (direction !== 'up') touchDirection = 'down'; break;
         case 'ArrowLeft': if (direction !== 'right') touchDirection = 'left'; break;
         case 'ArrowRight': if (direction !== 'left') touchDirection = 'right'; break;
+        case 'w': if (direction !== 'down') touchDirection = 'up'; break;
+        case 's': if (direction !== 'up') touchDirection = 'down'; break;
+        case 'a': if (direction !== 'right') touchDirection = 'left'; break;
+        case 'd': if (direction !== 'left') touchDirection = 'right'; break;
       }
     }
 
