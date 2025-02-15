@@ -440,12 +440,6 @@
       gameBoard = ['', '', '', '', '', '', '', '', ''];
       gameActive = true;
       clearInterval(timer);
-    function fullResetGame() {
-      currentPlayer = 'X';
-      gameBoard = ['', '', '', '', '', '', '', '', ''];
-      gameActive = true;
-      clearInterval(timer);
-      scores = { X: 0, O: 0 };
       
       document.querySelectorAll('.cell').forEach(cell => {
         cell.textContent = '';
@@ -460,6 +454,28 @@
         scores.X = 0;
         scores.O = 0;
       }
+      
+      updateScores();
+      if (timeLimit !== Infinity) {
+        startTimer();
+      }
+    }
+    function fullResetGame() {
+      currentPlayer = 'X';
+      gameBoard = ['', '', '', '', '', '', '', '', ''];
+      gameActive = true;
+      clearInterval(timer);
+      
+      document.querySelectorAll('.cell').forEach(cell => {
+        cell.textContent = '';
+        cell.classList.remove('x', 'o');
+      });
+      
+      document.querySelector('.game-status').textContent = "Player X's Turn";
+      
+      // full reset so deffinetly score to 0
+      scores.X = 0;
+      scores.O = 0;
       
       updateScores();
       if (timeLimit !== Infinity) {
