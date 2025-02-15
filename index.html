@@ -249,6 +249,12 @@
     <button class="mode-btn" onclick="setGameMode('best-of-9', event)">Best of 9</button>
     <button class="mode-btn" onclick="setGameMode('first-to-20', event)">First to 20</button>
   </div>
+  
+  <div class="start-select">
+    <button class="mode-btn" onclick="setRotationMode('x-start', event)">X always starts</button>
+    <button class="mode-btn" onclick="setRotationMode('winner-start', event)">Winner starts</button>
+    <button class="mode-btn" onclick="setRotationMode('swap-start', event)">Loser Starts</button>
+  </div>
 
   <div class="game-status">Player X's Turn</div>
   <div class="timer" style="display: none;">Time left: 1s</div>
@@ -296,6 +302,7 @@
     let targetScore = Infinity;
     let timer;
     let timeLeft;
+    let starthow = 'x-start';
 
     const winningCombinations = [
       [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -356,6 +363,23 @@
         case 'best-of-9': targetScore = 5; break;
         case 'first-to-20': targetScore = 20; break;
         default: targetScore = Infinity;
+      }
+      
+      resetGame();
+    }
+    
+    function setRotationMode(mode, event) {
+      rotationMode = mode;
+      document.querySelectorAll('.start-select .mode-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      switch(mode) {
+        case 'x-start': starthow = "x-start"; break;
+        case 'winner-start': starthow = "winner-start"; break;
+        case 'swap-start': starthow = "swap-start"; break;
+        default: starthow = "x-start";
       }
       
       resetGame();
@@ -438,7 +462,16 @@
     }
 
     function resetGame() {
-      currentPlayer = 'X';
+      
+      if (starthow === 'x-start') {
+        currentPlayer = 'X';
+      } else if (starthow === 'swap-start') {
+        	if (currentPlayer === 'X') {
+        		currentPlayer = 'O';
+        	} else if (currentPlayer === 'O') {
+        		currentPlayer = 'X';
+        		}
+      } 
       gameBoard = ['', '', '', '', '', '', '', '', ''];
       gameActive = true;
       clearInterval(timer);
@@ -455,10 +488,11 @@
         alert(`Game Over! ${scores.X > scores.O ? 'Player X' : 'Player O'} wins the series!`);
         scores.X = 0;
         scores.O = 0;
+        
       }
       
       updateScores();
-      if (timeLimit !== Infinity) {
+      if (timeLimit !== Infinity && (scores.O !== 0 || scores.X !== 0)) {
         startTimer();
       }
     }
